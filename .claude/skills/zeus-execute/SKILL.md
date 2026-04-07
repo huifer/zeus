@@ -80,6 +80,14 @@ Each task completion must include:
 4. Task-level AI log `.zeus/{version}/ai-logs/{ISO-ts}-{task_id}.md`
 5. Progress append to `.zeus/{version}/progress.txt`
 
+Brownfield extension:
+
+- If task includes `refactor_of`, switch to minimal-intrusion strategy:
+  1. Add or update tests around existing behavior first.
+  2. Apply smallest safe change in existing modules.
+  3. Preserve backward compatibility or provide migration notes.
+- Include `refactor_of` details in task-level AI log execution summary.
+
 ## Failure policy
 
 - quality check failure: pause and surface error details,

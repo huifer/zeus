@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/codebase-map",
+  "title": "Zeus Codebase Map",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_at",
+    "project_root",
+    "scan_depth",
+    "summary",
+    "languages",
+    "runtimes",
+    "frameworks",
+    "dependencies",
+    "entry_points",
+    "module_hotspots",
+    "concerns"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "project_root": { "type": "string" },
+    "scan_depth": {
+      "type": "string",
+      "enum": ["quick", "auto", "full"]
+    },
+    "summary": {
+      "type": "object",
+      "required": ["files_total", "directories_total"],
+      "properties": {
+        "files_total": { "type": "integer", "minimum": 0 },
+        "directories_total": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "runtimes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "frameworks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": ["string", "null"] },
+          "layer": {
+            "type": "string",
+            "enum": ["frontend", "backend", "infra", "test", "unknown"]
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": ["string", "null"] },
+          "scope": {
+            "type": "string",
+            "enum": ["prod", "dev", "peer", "optional", "unknown"]
+          }
+        }
+      }
+    },
+    "entry_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "kind"],
+        "properties": {
+          "path": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["app", "api", "cli", "worker", "config", "unknown"]
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "module_hotspots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "loc"],
+        "properties": {
+          "path": { "type": "string" },
+          "loc": { "type": "integer", "minimum": 0 },
+          "signals": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "concerns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "summary"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["todo", "complexity", "test-gap", "security", "unknown"]
+          },
+          "summary": { "type": "string" },
+          "paths": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

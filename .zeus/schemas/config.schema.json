@@ -13,6 +13,14 @@
         "version":    { "type": "string", "default": "main" },
         "domain":     { "type": "string" },
         "tech_stack": { "type": "array", "items": { "type": "string" } },
+        "codebase_map_ref": {
+          "type": ["string", "null"],
+          "description": "可选：brownfield 映射文件路径，如 .zeus/main/codebase-map.json"
+        },
+        "existing_modules_ref": {
+          "type": ["string", "null"],
+          "description": "可选：模块映射文件路径，如 .zeus/main/existing-modules.json"
+        },
         "created_at": { "type": "string", "format": "date-time" }
       }
     },

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/existing-modules",
+  "title": "Zeus Existing Modules",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "version", "modules"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "version": { "type": "string" },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "role"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string" },
+          "role": {
+            "type": "string",
+            "enum": ["api", "frontend", "infra", "data", "shared", "test", "unknown"]
+          },
+          "exports": { "type": "array", "items": { "type": "string" } },
+          "depends_on": { "type": "array", "items": { "type": "string" } },
+          "owned_by": { "type": ["string", "null"] },
+          "risk": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

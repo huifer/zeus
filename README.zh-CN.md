@@ -23,6 +23,9 @@ cp .zeus/hooks/commit-msg .git/hooks/commit-msg
 # 2) 初始化 Zeus
 /zeus:init
 
+# 老项目推荐先做代码基线映射
+/zeus:discover --depth auto
+
 # 3) 首次全量设计
 /zeus:brainstorm --full
 
@@ -48,6 +51,7 @@ cp .zeus/hooks/commit-msg .git/hooks/commit-msg
 | 命令 | 用途 | 主要产物 |
 |---|---|---|
 | `/zeus:init` | 初始化 Zeus 工作区与北极星指标 | `.zeus/main/config.json`、`evolution.md` |
+| `/zeus:discover [--version v2] [--depth quick\|auto\|full]` | 映射现有代码库并生成 brownfield 上下文资产 | `codebase-map.json`、`existing-modules.json`、`tech-inventory.md`、`architecture.md` |
 | `/zeus:brainstorm --full` | 全量设计对话与 spec 编写 | `.zeus/main/specs/*.md` |
 | `/zeus:brainstorm --feature <name>` | 单功能设计循环 | feature spec |
 | `/zeus:plan [--version v2]` | 将 spec 拆解为故事与任务 | `prd.json`、`task.json`、`roadmap.json` |
@@ -77,6 +81,8 @@ cp .zeus/hooks/commit-msg .git/hooks/commit-msg
   v2/ ... vN/
   schemas/
     config.schema.json
+    codebase-map.schema.json
+    existing-modules.schema.json
     prd.schema.json
     task.schema.json
     roadmap.schema.json
@@ -99,6 +105,27 @@ assets/
   zeus-workflow.en.svg
   zeus-workflow.zh-CN.svg
 ```
+
+## 老项目接入（Brownfield）
+
+针对已有代码库，建议按如下顺序：
+
+```bash
+# 1) 先生成代码地图与上下文资产
+/zeus:discover --version main --depth auto
+
+# 2) 使用 discover 结果初始化配置
+/zeus:init --import-existing --version main
+
+# 3) 在既有模块约束下做功能设计与拆解
+/zeus:brainstorm --feature <name> --version main
+/zeus:plan --version main
+
+# 4) 按 wave 执行
+/zeus:execute --version main
+```
+
+该流程对新项目保持兼容：不运行 discover 时，原有 init -> brainstorm -> plan -> execute 路径不变。
 
 ## Agent 模型
 

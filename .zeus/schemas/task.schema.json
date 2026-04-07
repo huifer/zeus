@@ -33,6 +33,16 @@
             "items": { "type": "string", "pattern": "^T-\\d{3}$" },
             "description": "依赖的 task id 列表，frontend task 通常依赖对应 api task"
           },
+          "refactor_of": {
+            "type": ["string", "null"],
+            "description": "可选：此任务改造的既有模块或文件标识",
+            "default": null
+          },
+          "depends_on_existing": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "可选：依赖的既有模块路径或标识"
+          },
           "passes":     { "type": "boolean", "default": false },
           "commit_sha": { "type": ["string", "null"], "default": null },
           "ai_log_ref": {

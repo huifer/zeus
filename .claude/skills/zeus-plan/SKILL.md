@@ -85,6 +85,8 @@ Task schema:
   "description": "Include validation, error mapping, and audit logging.",
   "files": ["src/app/api/auth/login/route.ts"],
   "depends_on": [],
+  "refactor_of": null,
+  "depends_on_existing": [],
   "passes": false,
   "commit_sha": null,
   "ai_log_ref": null,
@@ -92,6 +94,12 @@ Task schema:
   "created_at": "2026-04-07T00:00:00.000Z"
 }
 ```
+
+Brownfield policy:
+
+- If task modifies existing modules, fill `refactor_of` with a stable module path or identifier.
+- If task depends on existing code not represented by Zeus task IDs, list those in `depends_on_existing`.
+- Keep both fields optional for backward compatibility.
 
 ### 4) Compute wave plan
 

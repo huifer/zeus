@@ -23,6 +23,9 @@ cp .zeus/hooks/commit-msg .git/hooks/commit-msg
 # 2) Initialize the Zeus project workspace
 /zeus:init
 
+# Optional for brownfield repositories: map the existing codebase first
+/zeus:discover --depth auto
+
 # 3) Build the first design spec
 /zeus:brainstorm --full
 
@@ -48,6 +51,7 @@ Chinese workflow diagram:
 | Command | Purpose | Main Output |
 |---|---|---|
 | `/zeus:init` | Initialize Zeus workspace and north star metrics | `.zeus/main/config.json`, `evolution.md` |
+| `/zeus:discover [--version v2] [--depth quick\|auto\|full]` | Map existing codebase and generate brownfield context artifacts | `codebase-map.json`, `existing-modules.json`, `tech-inventory.md`, `architecture.md` |
 | `/zeus:brainstorm --full` | Full-scope design dialogue and spec authoring | `.zeus/main/specs/*.md` |
 | `/zeus:brainstorm --feature <name>` | Single-feature design loop | feature spec |
 | `/zeus:plan [--version v2]` | Convert spec to user stories and tasks | `prd.json`, `task.json`, `roadmap.json` |
@@ -77,6 +81,8 @@ Chinese workflow diagram:
   v2/ ... vN/
   schemas/
     config.schema.json
+    codebase-map.schema.json
+    existing-modules.schema.json
     prd.schema.json
     task.schema.json
     roadmap.schema.json
@@ -88,6 +94,27 @@ Chinese workflow diagram:
     zeus-runner.sh
     generate-tests.sh
     collect-metrics.sh
+
+## Brownfield Adoption
+
+For existing repositories, run this path:
+
+```bash
+# 1) Build codebase context artifacts
+/zeus:discover --version main --depth auto
+
+# 2) Initialize config using discovered context
+/zeus:init --import-existing --version main
+
+# 3) Design and plan a scoped feature against existing modules
+/zeus:brainstorm --feature <name> --version main
+/zeus:plan --version main
+
+# 4) Execute with wave gates
+/zeus:execute --version main
+```
+
+This keeps Zeus backward-compatible for greenfield projects while adding safe brownfield onboarding.
   hooks/
     commit-msg
 

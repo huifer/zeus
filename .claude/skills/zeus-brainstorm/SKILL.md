@@ -31,6 +31,8 @@ Read first:
 - `.zeus/{version}/task.json`
 - `.zeus/{version}/roadmap.json`
 - `.zeus/{version}/specs/*` (recent entries)
+- `.zeus/{version}/existing-modules.json` (if present)
+- `.zeus/{version}/architecture.md` (if present)
 
 If config is missing, stop and instruct user to run `/zeus:init`.
 
@@ -43,6 +45,7 @@ Perform read-only exploration and summarize current baseline:
 - existing stories/tasks that overlap this request,
 - known constraints,
 - existing architectural boundaries.
+- existing modules that can be reused or extended.
 
 ### 2) Scope fit check
 
@@ -68,6 +71,12 @@ Prefer multiple-choice when practical.
 ### 4) Approach options (2-3)
 
 Present options with trade-offs and recommendation tied to `north_star` impact.
+
+For brownfield projects, each option must explicitly classify implementation strategy:
+
+- Reuse existing module
+- Extend existing module
+- Rewrite with migration plan
 
 ### 5) Section-by-section design review
 

@@ -1,7 +1,7 @@
 ---
 name: zeus-init
 description: Initialize a new Zeus project. Creates .zeus/main/ directory structure, sets up config.json with north star metrics, and writes the first evolution.md entry. Use this FIRST before any other zeus skill.
-argument-hint: [project-context]
+argument-hint: [project-context] [--import-existing] [--version vN]
 shell: bash
 ---
 
@@ -21,6 +21,15 @@ Use this skill as the mandatory first step before any other `/zeus:*` workflow.
 - Workspace contains `.zeus/` scaffold and schema files.
 - You can write under `.zeus/main/`.
 - Git repository is available (or can be initialized).
+
+## Brownfield mode
+
+When `--import-existing` is provided:
+
+- Read `.zeus/{version}/codebase-map.json` if present.
+- Read `.zeus/{version}/existing-modules.json` if present.
+- Pre-fill `project.domain` and `project.tech_stack` from discovered artifacts.
+- Keep one-question loop to let user confirm or override inferred values.
 
 ## Required context files
 
@@ -46,6 +55,8 @@ Collect, in this exact order:
 2. Primary domain (optional)
 3. Technology stack
 4. Version intent (single version or future `v2/v3` tracks)
+
+If `--import-existing` is active, show inferred values before each question as defaults.
 
 ### 3) North star metric proposal
 
@@ -75,6 +86,11 @@ Write schema-compatible configuration with:
 - `metrics` north star and weights
 - `git` commit format policy
 - `versions` active set and folder mapping
+
+When imported artifacts exist, also write:
+
+- `project.codebase_map_ref`
+- `project.existing_modules_ref`
 
 If user declares future versions, register them in `versions` only. Do not create folders here.
 
@@ -119,6 +135,11 @@ Report created artifacts and recommend next commands:
 - `/zeus:brainstorm --full`
 - `/zeus:brainstorm --feature <name>`
 - `/zeus:status`
+
+For brownfield mode, recommend:
+
+- `/zeus:brainstorm --feature <name> --version <version>`
+- `/zeus:plan --version <version>`
 
 ## Failure handling
 

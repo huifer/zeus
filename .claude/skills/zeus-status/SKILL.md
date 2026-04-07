@@ -44,11 +44,16 @@ For global scope compute:
 Decision table:
 
 - missing config -> `/zeus:init`
+- codebase map exists but config not imported -> `/zeus:init --import-existing`
 - no tasks -> `/zeus:brainstorm --full`
 - pending tasks -> `/zeus:execute`
 - tasks complete but no feedback -> `/zeus:feedback`
 - evolution signal unresolved -> `/zeus:evolve`
 - stable -> `/zeus:brainstorm --feature <next-feature>`
+
+Brownfield freshness recommendation:
+
+- if `.zeus/{version}/codebase-map.json` is stale relative to recent repository changes, recommend `/zeus:discover --version {version}` before planning.
 
 ### 4) Render output
 
