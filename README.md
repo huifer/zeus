@@ -187,6 +187,10 @@ chore(zeus): initialize v2 evolution
 3. Preserve backward compatibility for core `.zeus` schema files.
 4. Add docs updates for any workflow changes.
 
+## Acknowledgements / 友链
+
+- [LINUX DO](https://linux.do/) — 开源社区支持
+
 ## Contact / 交流群
 
 <p align="center">
