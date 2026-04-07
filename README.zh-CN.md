@@ -187,6 +187,12 @@ chore(zeus): initialize v2 evolution
 3. 保持 `.zeus` 核心 schema 向后兼容。
 4. 工作流变化必须同步更新文档。
 
+## 交流群
+
+<p align="center">
+  <img src="assets/image.png" alt="交流群" width="300" />
+</p>
+
 ## 许可证
 
 MIT License — 见 [LICENSE](LICENSE)。

@@ -187,6 +187,12 @@ chore(zeus): initialize v2 evolution
 3. Preserve backward compatibility for core `.zeus` schema files.
 4. Add docs updates for any workflow changes.
 
+## Contact / 交流群
+
+<p align="center">
+  <img src="assets/image.png" alt="交流群" width="300" />
+</p>
+
 ## License
 
 MIT License — see [LICENSE](LICENSE).
