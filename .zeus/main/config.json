@@ -1,0 +1,25 @@
+{
+  "project": {
+    "name": "",
+    "version": "main",
+    "domain": "",
+    "tech_stack": [],
+    "created_at": ""
+  },
+  "metrics": {
+    "north_star": "",
+    "weights": {},
+    "ai_designed": false,
+    "rationale": ""
+  },
+  "git": {
+    "commit_format": "{type}({task_id}): {description}",
+    "types": ["feat", "fix", "docs", "chore", "test", "refactor"]
+  },
+  "versions": {
+    "active": ["main"],
+    "folders": {
+      "main": ".zeus/main"
+    }
+  }
+}

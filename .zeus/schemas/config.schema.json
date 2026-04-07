@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/config",
+  "title": "Zeus Config",
+  "type": "object",
+  "required": ["project", "metrics", "git", "versions"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["name", "version", "created_at"],
+      "properties": {
+        "name":       { "type": "string" },
+        "version":    { "type": "string", "default": "main" },
+        "domain":     { "type": "string" },
+        "tech_stack": { "type": "array", "items": { "type": "string" } },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["north_star"],
+      "properties": {
+        "north_star": {
+          "type": "string",
+          "description": "唯一优化目标，如 conversion / revenue / pv_uv"
+        },
+        "weights": {
+          "type": "object",
+          "description": "复合指标权重，key 为指标名，value 为 0-1 权重",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "ai_designed": {
+          "type": "boolean",
+          "description": "true = AI 推荐权重，false = 用户自填"
+        },
+        "rationale": {
+          "type": "string",
+          "description": "AI 设计指标权重时的推理说明"
+        }
+      }
+    },
+    "git": {
+      "type": "object",
+      "properties": {
+        "commit_format": {
+          "type": "string",
+          "default": "{type}({task_id}): {description}"
+        },
+        "types": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["feat", "fix", "docs", "chore", "test", "refactor"]
+        }
+      }
+    },
+    "versions": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "当前激活的版本文件夹列表，如 [main, v2]"
+        },
+        "folders": {
+          "type": "object",
+          "description": "版本名 → 文件夹路径映射，如 {main: '.zeus/main', v2: '.zeus/v2'}",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "inherits": {
+      "type": "string",
+      "description": "子版本专用：继承的父版本名（如 'main'）"
+    },
+    "overrides": {
+      "type": "object",
+      "description": "子版本差异宣言：覆盖父版本的字段"
+    }
+  }
+}

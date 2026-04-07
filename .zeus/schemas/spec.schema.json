@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/spec",
+  "title": "Zeus Spec — 设计文档元数据",
+  "description": "描述 .zeus/{version}/specs/*.md 文件的 YAML frontmatter 结构，由 zeus-brainstorm 写入",
+  "type": "object",
+  "required": ["id", "title", "scope", "status", "version"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}-.+$",
+      "description": "文件名不含 .md，如 2026-04-07-auth-design"
+    },
+    "title":   { "type": "string" },
+    "version": { "type": "string", "description": "所属版本，如 main / v2" },
+    "scope": {
+      "type": "string",
+      "enum": ["full", "feature"],
+      "description": "full = 全量设计（--full）；feature = 单功能设计（--feature）"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "approved", "superseded"],
+      "description": "draft = 草稿；approved = 用户确认通过；superseded = 已被新 spec 替代"
+    },
+    "feature_name": {
+      "type": ["string", "null"],
+      "description": "仅 scope=feature 时有效，对应 --feature 参数值"
+    },
+    "approved_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "north_star_impact": {
+      "type": "string",
+      "description": "此 spec 预期对北极星指标产生的影响，自然语言说明"
+    },
+    "derived_milestones": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^M-\\d{3}$" },
+      "description": "zeus-plan 执行后回填的关联里程碑 ID 列表"
+    }
+  }
+}

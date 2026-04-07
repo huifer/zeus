@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/prd",
+  "title": "Zeus PRD — 用户故事集",
+  "type": "object",
+  "required": ["version", "stories"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "stories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "description", "priority", "version_scope", "passes"],
+        "properties": {
+          "id":          { "type": "string", "pattern": "^US-\\d{3}$" },
+          "title":       { "type": "string" },
+          "description": { "type": "string" },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["high", "medium", "low"]
+          },
+          "version_scope": {
+            "type": "string",
+            "description": "此故事属于哪个版本，如 main / v2"
+          },
+          "passes": {
+            "type": "boolean",
+            "default": false
+          },
+          "created_from_spec": {
+            "type": "string",
+            "description": "来源 spec 文件名"
+          },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

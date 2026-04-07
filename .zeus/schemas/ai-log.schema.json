@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/ai-log",
+  "title": "Zeus AI Log — 三段式思考日志（此文件为 Markdown，schema 仅说明结构）",
+  "description": "每次 skill 调用生成一个 .md 文件，格式：决策理由 / 执行摘要 / 目标预期",
+  "type": "object",
+  "properties": {
+    "filename_format": {
+      "description": "{ISO-timestamp}-{skill-name}.md，如 2026-04-07T142300-brainstorm.md"
+    },
+    "sections": {
+      "description": "Markdown 文件必须包含以下三个二级标题",
+      "type": "array",
+      "items": [
+        {
+          "heading": "## 决策理由",
+          "purpose": "为什么选择此方案，否定了哪些备选，推理依据"
+        },
+        {
+          "heading": "## 执行摘要",
+          "purpose": "实际做了什么操作，改了哪些文件，commit SHA（如有）"
+        },
+        {
+          "heading": "## 目标预期",
+          "purpose": "预计对 north_star 指标产生什么影响，尽量量化，作为后续反馈归因的标签"
+        }
+      ]
+    },
+    "metadata": {
+      "description": "文件头可选 YAML frontmatter",
+      "properties": {
+        "skill":      { "type": "string" },
+        "version":    { "type": "string" },
+        "task_id":    { "type": "string" },
+        "timestamp":  { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

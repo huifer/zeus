@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# =============================================================================
+# commit-msg — Zeus Git Commit Message 格式校验 Hook
+# 安装：cp .zeus/hooks/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+# =============================================================================
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# 允许通过的模式：
+# 1. Zeus 任务 commit：feat(T-001): 描述
+# 2. Zeus 系统 commit：chore(zeus): 描述 / docs(zeus): 描述
+# 3. Merge commit：Merge ...
+# 4. Initial commit (首次提交豁免)
+
+TASK_PATTERN='^(feat|fix|docs|chore|test|refactor)\(T-[0-9]{3}\): .+$'
+ZEUS_PATTERN='^(feat|fix|docs|chore|test|refactor)\(zeus\): .+$'
+MERGE_PATTERN='^Merge .+'
+INIT_PATTERN='^(Initial commit|initial commit|init|Init).*$'
+
+if echo "$COMMIT_MSG" | grep -qE "$TASK_PATTERN"; then
+  exit 0
+fi
+
+if echo "$COMMIT_MSG" | grep -qE "$ZEUS_PATTERN"; then
+  exit 0
+fi
+
+if echo "$COMMIT_MSG" | grep -qE "$MERGE_PATTERN"; then
+  exit 0
+fi
+
+if echo "$COMMIT_MSG" | grep -qE "$INIT_PATTERN"; then
+  exit 0
+fi
+
+echo ""
+echo "❌ Zeus Commit 格式不符合规范！"
+echo ""
+echo "你的提交信息：$COMMIT_MSG"
+echo ""
+echo "正确格式："
+echo "  任务 commit：{type}(T-{NNN}): {描述}"
+echo "  系统 commit：{type}(zeus): {描述}"
+echo ""
+echo "type 可选：feat / fix / docs / chore / test / refactor"
+echo ""
+echo "示例："
+echo "  feat(T-003): implement user registration form"
+echo "  fix(T-007): correct login token expiry logic"
+echo "  docs(zeus): update prd from auth-design spec"
+echo "  chore(zeus): initialize v2 evolution"
+echo ""
+exit 1

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/task",
+  "title": "Zeus Task — 任务集合",
+  "description": "最小执行单位：一个 API 接口 或 一个前端页面/组件",
+  "type": "object",
+  "required": ["version", "tasks"],
+  "properties": {
+    "version":    { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "story_id", "type", "title", "passes"],
+        "properties": {
+          "id":       { "type": "string", "pattern": "^T-\\d{3}$" },
+          "story_id": { "type": "string", "pattern": "^US-\\d{3}$" },
+          "type": {
+            "type": "string",
+            "enum": ["api", "frontend", "infra", "docs"],
+            "description": "api = 后端 API；frontend = 前端页面/组件；infra = 基础设施；docs = 文档"
+          },
+          "title":       { "type": "string" },
+          "description": { "type": "string" },
+          "files": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "任务涉及的文件路径"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^T-\\d{3}$" },
+            "description": "依赖的 task id 列表，frontend task 通常依赖对应 api task"
+          },
+          "passes":     { "type": "boolean", "default": false },
+          "commit_sha": { "type": ["string", "null"], "default": null },
+          "ai_log_ref": {
+            "type": ["string", "null"],
+            "description": "指向 ai-logs/ 中对应的三段式日志文件名",
+            "default": null
+          },
+          "wave": {
+            "type": ["integer", "null"],
+            "description": "执行波次编号，由 zeus-execute 自动计算",
+            "default": null
+          },
+          "created_at":  { "type": "string", "format": "date-time" },
+          "completed_at": { "type": ["string", "null"], "format": "date-time", "default": null }
+        }
+      }
+    }
+  }
+}

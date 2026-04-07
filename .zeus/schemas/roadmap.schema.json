@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zeus/roadmap",
+  "title": "Zeus Roadmap — 里程碑集合",
+  "description": "将 prd.json 用户故事聚合为可追踪的里程碑，关联 spec 来源与版本周期",
+  "type": "object",
+  "required": ["version", "milestones"],
+  "properties": {
+    "version":    { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "milestones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "story_ids", "task_ids"],
+        "properties": {
+          "id":       { "type": "string", "pattern": "^M-\\d{3}$" },
+          "title":    { "type": "string" },
+          "spec_ref": {
+            "type": ["string", "null"],
+            "description": "生成此里程碑所依据的 spec 文件名，如 2026-04-07-auth-design.md"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["planned", "in_progress", "completed", "deferred"],
+            "description": "planned = 已规划未开始；in_progress = 执行中；completed = 所有关联 task 通过；deferred = 延后"
+          },
+          "story_ids": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^US-\\d{3}$" },
+            "description": "属于此里程碑的用户故事 ID 列表"
+          },
+          "task_ids": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^T-\\d{3}$" },
+            "description": "属于此里程碑的执行任务 ID 列表"
+          },
+          "target_date": {
+            "type": ["string", "null"],
+            "format": "date",
+            "description": "预计完成日期（YYYY-MM-DD）"
+          },
+          "completed_at": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string",
+            "description": "里程碑备注或变更说明"
+          }
+        }
+      }
+    }
+  }
+}
